@@ -202,9 +202,14 @@ static MKStoreManager* _sharedStoreManager;
 
 +(NSDictionary*) storeKitItems
 {
-  return [NSDictionary dictionaryWithContentsOfFile:
-          [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:
-           @"MKStoreKitConfigs.plist"]];
+    if (self.customStoreKitItems){
+        return [self.customStoreKitItems];
+    }
+    else{
+        return [NSDictionary dictionaryWithContentsOfFile:
+                [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:
+                 @"MKStoreKitConfigs.plist"]];
+    }
 }
 
 - (void) restorePreviousTransactionsOnComplete:(void (^)(void)) completionBlock
